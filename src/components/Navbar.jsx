@@ -1,229 +1,232 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
-import logo from '../assets/image.png';
 import {
-  ChevronRight,
   Menu,
-  LayoutGrid,
-  HomeIcon,
-  PhoneCallIcon,
-  Shield,
-  ShoppingBag,
-  UserCircle2,
-  ShoppingCart,
-  Wrench,
   X,
+  Home,
+  Compass,
+  ChefHat,
+  Tag,
+  ShieldCheck,
+  ShoppingCart,
+  UserCircle2,
+  Search,
+  ChevronDown,
+  LogOut,
+  PhoneCall,
+  LayoutDashboard
 } from 'lucide-react';
+
+import logo from '../assets/image.png';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(false);
+  const dropdownRef = useRef();
+
+  const { user, logout } = useAuth();
   const { itemsCount } = useCart();
-  const { user } = useAuth();
+
+  // close dropdown outside click
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setOpenDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const navItems = [
-    { to: '/category/water-heaters', label: 'Water Heaters', icon: Wrench },
-    { to: '/category/kitchen-appliances', label: 'Kitchen Appliances', icon: LayoutGrid },
-    { to: '/category/health-wellness', label: 'Health & Wellness', icon: UserCircle2 },
+    { label: 'Home', to: '/', icon: Home },
+    { label: 'Explore', to: '/explore', icon: Compass },
+    { label: 'Deals', to: '/deals', icon: Tag },
+    { label: 'Smart Kitchen', to: '/services', icon: ChefHat },
+    { label: 'About', to: '/about', icon: ShieldCheck },
+    { label: 'Contact', to: '/reach-us', icon: PhoneCall },
   ];
 
   const linkClass = ({ isActive }) =>
-    `inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition ${
+    `inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${
       isActive
-        ? 'bg-linear-to-r from-blue-600 to-cyan-600 text-white shadow-[0_0_15px_rgba(37,99,235,0.45)]'
-        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+        ? 'bg-blue-600 text-white shadow-sm'
+        : 'text-slate-600 hover:text-blue-600 hover:bg-slate-50'
     }`;
 
-  return (
-    <>
-      <nav className="sticky top-0 z-50 border-b border-slate-200 bg-white/80 backdrop-blur-xl">
-        <div className="ga-container flex h-20 items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <img
-              src={logo}
-              alt="Golden Associate logo"
-              className="h-11 w-11 rounded-xl border border-slate-300 bg-slate-50 p-1"
-            />
-            <div>
-              <p className="ga-text-gradient text-lg font-extrabold tracking-tight">
-                Golden Associate
-              </p>
-              <p className="text-xs font-medium text-slate-500">
-                Smart appliance solutions
-              </p>
+  const AccountDropdown = ({ mobile = false }) => (
+    <div
+      className={`${
+        mobile ? 'w-full mt-2' : 'absolute right-0 mt-2 w-48'
+      } bg-white border border-slate-200 rounded-xl shadow-lg overflow-hidden animate-fade-in z-110`}
+    >
+      <div className="p-1 space-y-0.5">
+        {user ? (
+          <>
+            <div className="px-4 py-3 border-b border-slate-50 mb-1">
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Signed in as</p>
+              <p className="text-xs font-bold text-slate-900 truncate">{user.username}</p>
+              {user.role === 'admin' && (
+                <span className="mt-1 inline-block bg-blue-50 text-blue-600 text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-tighter">Administrator</span>
+              )}
             </div>
+            {user.role === 'admin' && (
+              <NavLink
+                to="/admin/dashboard"
+                className="flex items-center gap-2 px-4 py-2.5 text-xs font-bold text-blue-600 hover:bg-blue-50 rounded-lg transition"
+                onClick={() => {
+                  setOpenDropdown(false);
+                  setIsOpen(false);
+                }}
+              >
+                <LayoutDashboard size={14} /> Admin Panel
+              </NavLink>
+            )}
+            <button
+              onClick={() => {
+                logout();
+                setOpenDropdown(false);
+                setIsOpen(false);
+              }}
+              className="w-full flex items-center gap-2 px-4 py-2.5 text-xs font-bold text-rose-600 hover:bg-rose-50 rounded-lg transition"
+            >
+              <LogOut size={14} /> Log Out
+            </button>
+          </>
+        ) : (
+          <>
+            <NavLink
+              to="/login"
+              className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-slate-700 hover:bg-slate-50 rounded-lg transition"
+              onClick={() => {
+                setOpenDropdown(false);
+                setIsOpen(false);
+              }}
+            >
+              Log In
+            </NavLink>
+            <NavLink
+              to="/signup"
+              className="flex items-center justify-center px-4 py-2 text-xs font-black text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition mx-1"
+              onClick={() => {
+                setOpenDropdown(false);
+                setIsOpen(false);
+              }}
+            >
+              Sign Up
+            </NavLink>
+          </>
+        )}
+      </div>
+    </div>
+  );
+
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-110 bg-white/80 backdrop-blur-md border-b border-slate-200">
+      <div className="ga-container h-16 flex items-center justify-between gap-4">
+        {/* Logo */}
+        <NavLink to="/" className="flex items-center gap-2 shrink-0">
+          <img src={logo} alt="Golden Associate" className="h-8 w-auto" />
+          <span className="text-sm font-black tracking-tighter text-slate-900 hidden sm:block">
+            GOLDEN<span className="text-blue-600">ASSOCIATE</span>
+          </span>
+        </NavLink>
+
+        {/* Desktop Nav */}
+        <div className="hidden lg:flex items-center gap-1">
+          {navItems.map((item) => (
+            <NavLink key={item.label} to={item.to} className={linkClass}>
+              <item.icon size={14} /> {item.label}
+            </NavLink>
+          ))}
+        </div>
+
+        {/* Desktop Actions */}
+        <div className="hidden lg:flex items-center gap-3">
+          <NavLink
+            to="/cart"
+            className="p-2 text-slate-600 hover:text-blue-600 hover:bg-slate-50 rounded-lg transition relative"
+          >
+            <ShoppingCart size={18} />
+            {itemsCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-blue-600 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border-2 border-white">
+                {itemsCount}
+              </span>
+            )}
+          </NavLink>
+
+          <div className="relative" ref={dropdownRef}>
+            <button
+              onClick={() => setOpenDropdown(!openDropdown)}
+              className="flex items-center gap-2 p-1 pl-2 border border-slate-200 rounded-full hover:border-blue-200 transition bg-slate-50"
+            >
+              <UserCircle2 size={24} className="text-slate-400" />
+              <ChevronDown
+                size={14}
+                className={`text-slate-400 transition-transform ${
+                  openDropdown ? 'rotate-180' : ''
+                }`}
+              />
+            </button>
+            {openDropdown && <AccountDropdown />}
+          </div>
+        </div>
+
+        {/* Mobile Toggle */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="lg:hidden p-2 text-slate-600 hover:bg-slate-50 rounded-lg transition"
+        >
+          {isOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className="lg:hidden bg-white border-t border-slate-100 animate-fade-in divide-y divide-slate-50">
+          <div className="p-4 space-y-1">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.label}
+                to={item.to}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 p-3 rounded-xl text-sm font-bold transition-all ${
+                    isActive
+                      ? 'bg-blue-50 text-blue-600'
+                      : 'text-slate-600 hover:bg-slate-50'
+                  }`
+                }
+                onClick={() => setIsOpen(false)}
+              >
+                <item.icon size={18} /> {item.label}
+              </NavLink>
+            ))}
           </div>
 
-          <ul className="hidden items-center gap-1 lg:flex">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <li key={item.to}>
-                  <NavLink to={item.to} className={linkClass}>
-                    <Icon size={16} />
-                    {item.label}
-                  </NavLink>
-                </li>
-              );
-            })}
-          </ul>
+          <div className="p-4 space-y-4">
+            <NavLink
+              to="/cart"
+              className="flex items-center justify-between p-3 bg-slate-50 rounded-xl text-sm font-bold text-slate-900"
+              onClick={() => setIsOpen(false)}
+            >
+              <div className="flex items-center gap-3">
+                <ShoppingCart size={18} className="text-blue-600" />
+                Your Cart
+              </div>
+              {itemsCount > 0 && (
+                <span className="bg-blue-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full">
+                  {itemsCount}
+                </span>
+              )}
+            </NavLink>
 
-          <ul className="hidden items-center gap-2 lg:flex">
-            {user ? (
-              <>
-                {user?.role === 'admin' ? (
-                  <li>
-                    <NavLink
-                      to="/admin-dashboard"
-                      className="inline-flex items-center gap-2 rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-100"
-                    >
-                      <Shield size={18} />
-                      Admin Panel
-                    </NavLink>
-                  </li>
-                ) : (
-                  <li>
-                    <NavLink
-                      to="/profile"
-                      className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-900"
-                    >
-                      <UserCircle2 size={18} />
-                      My Profile
-                    </NavLink>
-                  </li>
-                )}
-                <li>
-                  <NavLink
-                    to="/cart"
-                    className="inline-flex items-center gap-2 rounded-lg bg-linear-to-r from-amber-500 to-orange-500 px-3 py-2 text-sm font-semibold text-white hover:from-amber-400 hover:to-orange-400 shadow-[0_0_15px_rgba(245,158,11,0.3)] transition"
-                  >
-                    <ShoppingCart size={18} />
-                    Cart
-                    <span className="rounded-full bg-slate-200 px-2 py-1 text-xs">
-                      {itemsCount}
-                    </span>
-                  </NavLink>
-                </li>
-              </>
-            ) : (
-              <>
-                <li>
-                  <NavLink
-                    to="/login"
-                    className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-900"
-                  >
-                    Login
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/signup"
-                    className="rounded-lg bg-linear-to-r from-blue-600 to-cyan-600 px-3 py-2 text-sm font-semibold text-white shadow-[0_0_15px_rgba(37,99,235,0.4)] transition hover:brightness-110"
-                  >
-                    Sign Up
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/cart"
-                    className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 transition"
-                  >
-                    <ShoppingCart size={18} />
-                    Cart
-                    <span className="rounded-full bg-slate-200 px-2 py-1 text-xs text-slate-900">
-                      {itemsCount}
-                    </span>
-                  </NavLink>
-                </li>
-              </>
-            )}
-          </ul>
-
-          <button
-            onClick={() => setIsOpen((prev) => !prev)}
-            className="inline-flex rounded-lg border border-slate-200 p-2 text-slate-600 hover:text-slate-900 lg:hidden"
-            type="button"
-          >
-            {isOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
-        </div>
-      </nav>
-
-      {isOpen && (
-        <div className="ga-container ga-fade-up pb-3 lg:hidden">
-          <div className="ga-panel mt-2 p-3">
-            <ul className="space-y-2">
-              {navItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <li key={item.to}>
-                    <NavLink
-                      to={item.to}
-                      className={linkClass}
-                      onClick={() => setIsOpen(false)}
-                    >
-                      <Icon size={16} />
-                      {item.label}
-                    </NavLink>
-                  </li>
-                );
-              })}
-              {user?.role === 'admin' ? (
-                <li>
-                  <NavLink
-                    to="/admin-dashboard"
-                    className="inline-flex w-full items-center justify-between rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-sm font-semibold text-blue-700"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Admin Panel
-                    <ChevronRight size={16} />
-                  </NavLink>
-                </li>
-              ) : user ? (
-                <li>
-                  <NavLink
-                    to="/profile"
-                    className="inline-flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <UserCircle2 size={18} />
-                    My Profile
-                  </NavLink>
-                </li>
-              ) : null}
-              <li className="grid grid-cols-2 gap-2 pt-2">
-                {!user && (
-                  <>
-                    <NavLink
-                      to="/login"
-                      className="rounded-lg border border-slate-200 px-3 py-2 text-center text-sm font-semibold text-slate-600 hover:text-slate-900"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Login
-                    </NavLink>
-                    <NavLink
-                      to="/signup"
-                      className="rounded-lg bg-linear-to-r from-blue-600 to-cyan-600 px-3 py-2 text-center text-sm font-semibold text-white"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Sign Up
-                    </NavLink>
-                  </>
-                )}
-                <NavLink
-                  to="/cart"
-                  className="col-span-2 rounded-lg bg-linear-to-r from-amber-500 to-orange-500 px-3 py-2 text-center text-sm font-semibold text-white"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Cart ({itemsCount})
-                </NavLink>
-              </li>
-            </ul>
+            <AccountDropdown mobile={true} />
           </div>
         </div>
       )}
-    </>
+    </nav>
   );
 };
 

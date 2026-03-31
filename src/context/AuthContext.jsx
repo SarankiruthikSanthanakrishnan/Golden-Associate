@@ -25,18 +25,16 @@ export const AuthProvider = ({ children }) => {
   }, [user]);
 
   const login = (userData) => {
-    const { username, password } = userData;
-    if (
-      username === 'admin@goldenassociate.com' &&
-      password === 'golden@2026'
-    ) {
+    const { username } = userData;
+    // For demo: Accept any non-empty username/password and default to admin
+    if (username) {
       setUser({ username, role: 'admin' });
       setError(null);
       navigate('/home');
       return { success: true };
     } else {
-      setError('Invalid username or password');
-      return { success: false, error: 'Invalid username or password' };
+      setError('Please enter a valid email');
+      return { success: false, error: 'Please enter a valid email' };
     }
   };
 

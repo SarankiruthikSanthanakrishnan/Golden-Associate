@@ -1,144 +1,73 @@
 import React from 'react';
+import { RotateCcw, CreditCard, ShieldCheck, HelpCircle, Phone, Mail, MapPin } from 'lucide-react';
 
 const RefundPolicy = () => {
   return (
-    <div className="ga-container pb-12 pt-10">
-      <div className="max-w-5xl mx-auto p-6 md:p-10 leading-7 ga-fade-up text-slate-600 ga-panel border border-slate-200 bg-white/90 backdrop-blur-md">
-        {/* Title */}
-        <h1 className="text-3xl font-extrabold mb-8 text-center text-slate-900 ga-text-gradient">
-          Refund & Return Policy
-        </h1>
+    <div className="bg-slate-50 min-h-screen py-12">
+      <div className="ga-container max-w-4xl">
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden animate-fade-in text-slate-600">
+          {/* Header */}
+          <div className="bg-slate-900 px-8 py-10 text-center relative overflow-hidden">
+            <div className="relative z-10 text-white">
+              <RotateCcw size={24} className="mx-auto mb-4 text-amber-500" />
+              <h1 className="text-2xl font-black tracking-tight uppercase">Refund & Return</h1>
+              <p className="text-slate-400 text-[10px] uppercase font-bold tracking-widest mt-1">Version 2.0 • March 2026</p>
+            </div>
+          </div>
 
-        <p className="mb-4">
-          This Return Policy outlines the conditions and process for returning
-          products purchased from <strong className="text-rose-600">Golden Associate</strong>.
-        </p>
+          <div className="p-8 lg:p-12 leading-relaxed">
+            <div className="space-y-8">
+              {/* Logic Sections */}
+              {[
+                { 
+                  icon: ShieldCheck, 
+                  title: '7-Day Return Policy', 
+                  desc: 'We offer a 7-day return policy for unused appliances in their original packaging. Return requests after 7 days will follow warranty guidelines.' 
+                },
+                { 
+                  icon: CreditCard, 
+                  title: 'Refund Process', 
+                  desc: 'Once approved, refunds are processed within 5-7 business days to the original payment source. Processing fees may apply.' 
+                },
+                { 
+                  icon: HelpCircle, 
+                  title: 'Damaged Items', 
+                  desc: 'Please report any shipping damage within 24 hours of delivery with photographic evidence for immediate replacement or full refund.' 
+                }
+              ].map((section, i) => (
+                <section key={i} className="flex gap-6 group">
+                  <div className="shrink-0 w-10 h-10 bg-slate-50 rounded-lg flex items-center justify-center text-slate-400 group-hover:bg-amber-50 group-hover:text-amber-600 transition-colors">
+                    <section.icon size={20} />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-black text-slate-900 mb-2 uppercase tracking-tight">{section.title}</h3>
+                    <p className="text-xs font-medium leading-relaxed">{section.desc}</p>
+                  </div>
+                </section>
+              ))}
 
-        {/* Section 1 */}
-        <h2 className="text-xl font-bold mt-8 mb-3 text-slate-900">
-          1. Eligibility for Returns
-        </h2>
-
-        <p className="mb-2">
-          <strong className="text-rose-600">a.</strong> Products must be unused, in original condition, and
-          in original packaging.
-        </p>
-        <p className="mb-4">
-          <strong className="text-rose-600">b.</strong> Perishable items (fresh or refrigerated goods) are
-          not eligible for return.
-        </p>
-
-        {/* Section 2 */}
-        <h2 className="text-xl font-bold mt-8 mb-3 text-slate-900">2. Return Initiation</h2>
-
-        <p className="mb-2">
-          <strong className="text-rose-600">a.</strong> Returns must be initiated within{' '}
-          <strong className="text-rose-600">1 day</strong> of receiving the product.
-        </p>
-        <p className="mb-4">
-          <strong className="text-rose-600">b.</strong> Contact us at:
-          <br />
-          <span className="text-rose-700">📞 9986683173</span>
-          <br />
-          <span className="text-rose-700">📧 karthiprakashwin@gmail.com</span>
-        </p>
-
-        {/* Section 3 */}
-        <h2 className="text-xl font-bold mt-8 mb-3 text-slate-900">3. Return Process</h2>
-
-        <p className="mb-2">
-          <strong className="text-rose-600">a.</strong> After approval, instructions will be provided.
-        </p>
-        <p className="mb-4">
-          <strong className="text-rose-600">b.</strong> Return shipping cost is customer’s responsibility
-          unless it's our error.
-        </p>
-
-        {/* Section 4 */}
-        <h2 className="text-xl font-bold mt-8 mb-3 text-slate-900">
-          4. Refund or Replacement
-        </h2>
-
-        <p className="mb-2">
-          <strong className="text-rose-600">a.</strong> Returned items will be inspected.
-        </p>
-        <p className="mb-4">
-          <strong className="text-rose-600">b.</strong> Customers can choose refund or replacement if
-          approved.
-        </p>
-
-        {/* Section 5 */}
-        <h2 className="text-xl font-bold mt-8 mb-3 text-slate-900">5. Refund Processing</h2>
-
-        <p className="mb-2">
-          <strong className="text-rose-600">a.</strong> Refund will be processed within{' '}
-          <strong className="text-rose-600">7 business days</strong>.
-        </p>
-        <p className="mb-4">
-          <strong className="text-rose-600">b.</strong> Refund will be credited to the original payment
-          method.
-        </p>
-
-        {/* Section 6 */}
-        <h2 className="text-xl font-bold mt-8 mb-3 text-slate-900">
-          6. Non-Returnable Items
-        </h2>
-
-        <p className="mb-4">
-          Gift cards, downloadable software, and perishable goods cannot be
-          returned.
-        </p>
-
-        {/* Section 7 */}
-        <h2 className="text-xl font-bold mt-8 mb-3 text-slate-900">
-          7. Damaged or Defective Products
-        </h2>
-
-        <p className="mb-2">
-          <strong className="text-rose-600">a.</strong> Report within <strong className="text-rose-600">1 day</strong> of delivery.
-        </p>
-        <p className="mb-4">
-          <strong className="text-rose-600">b.</strong> Photos or proof may be required for verification.
-        </p>
-
-        {/* Section 8 */}
-        <h2 className="text-xl font-bold mt-8 mb-3 text-slate-900">8. Cancellations</h2>
-
-        <p className="mb-2">
-          <strong className="text-rose-600">a.</strong> Orders can be cancelled within{' '}
-          <strong className="text-rose-600">1 hour</strong>.
-        </p>
-        <p className="mb-4">
-          <strong className="text-rose-600">b.</strong> Shipped orders cannot be cancelled.
-        </p>
-
-        {/* Section 9 */}
-        <h2 className="text-xl font-bold mt-8 mb-3 text-slate-900">9. Exchange Policy</h2>
-
-        <p className="mb-4">
-          Exchanges are not available. Customers must return and place a new
-          order.
-        </p>
-
-        {/* Section 10 */}
-        <h2 className="text-xl font-bold mt-8 mb-3 text-slate-900">
-          10. Contact Information
-        </h2>
-
-        <div className="bg-slate-50 border border-slate-200 p-6 rounded-xl mt-4 backdrop-blur-sm">
-          <p>
-            <strong className="text-slate-900">Golden Associate</strong>
-          </p>
-          <p className="mt-1">No 8/36, Loganathan Nagar, 1st Street</p>
-          <p>Choolaimedu, Chennai - 600094</p>
-          <p className="mt-2 text-rose-700">📞 9986683173</p>
-          <p className="text-rose-700">📧 karthiprakashwin@gmail.com</p>
+              <div className="bg-slate-50 rounded-xl p-8 border border-slate-200 mt-12">
+                <h3 className="text-sm font-black text-slate-900 mb-6 uppercase">Return Center</h3>
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <div className="space-y-3">
+                    <p className="font-black text-slate-400 uppercase text-[9px] tracking-widest">Office</p>
+                    <div className="flex gap-2 text-xs font-medium">
+                      <MapPin size={14} className="text-blue-600 shrink-0" />
+                      <p>52, 18th cross, 15th main, <br />Kurubharahalli, JC Nagar, Bangalore.</p>
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    <p className="font-black text-slate-400 uppercase text-[9px] tracking-widest">Connect</p>
+                    <div className="flex items-center gap-2 text-xs font-medium">
+                      <Phone size={14} className="text-blue-600" />
+                      <span>+91 99866 83173</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-        {/* Footer */}
-        <p className="mt-10 text-sm text-slate-500 text-center">
-          Effective Date: 03-06-2026
-        </p>
       </div>
     </div>
   );
