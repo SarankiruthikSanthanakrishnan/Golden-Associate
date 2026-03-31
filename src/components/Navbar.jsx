@@ -23,11 +23,9 @@ const Navbar = () => {
   const { user } = useAuth();
 
   const navItems = [
-    { to: '/', label: 'Home', icon: HomeIcon },
-    { to: '/shop', label: 'Shop', icon: ShoppingBag },
-    { to: '/services', label: 'Services', icon: Wrench },
-    { to: '/gallery', label: 'Gallery', icon: LayoutGrid },
-    { to: '/reach-us', label: 'Reach Us', icon: PhoneCallIcon },
+    { to: '/category/water-heaters', label: 'Water Heaters', icon: Wrench },
+    { to: '/category/kitchen-appliances', label: 'Kitchen Appliances', icon: LayoutGrid },
+    { to: '/category/health-wellness', label: 'Health & Wellness', icon: UserCircle2 },
   ];
 
   const linkClass = ({ isActive }) =>

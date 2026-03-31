@@ -27,6 +27,7 @@ export const productData = [
     description: 'Efficient instant water heater with safety features.',
     price: 2675,
     image: product1,
+    category: 'water-heaters',
   },
   {
     id: 2,
@@ -34,6 +35,7 @@ export const productData = [
     description: 'Compact geyser suitable for quick heating.',
     price: 2275,
     image: product2,
+    category: 'water-heaters',
   },
   {
     id: 3,
@@ -41,6 +43,7 @@ export const productData = [
     description: 'Multi-purpose kitchen tool set for daily use.',
     price: 5975,
     image: product3,
+    category: 'kitchen-appliances',
   },
   {
     id: 4,
@@ -48,6 +51,7 @@ export const productData = [
     description: 'Electric boiler for fast and safe heating.',
     price: 3575,
     image: product4,
+    category: 'water-heaters',
   },
   {
     id: 5,
@@ -55,6 +59,7 @@ export const productData = [
     description: 'Perfect for grilling, sandwich, and snacks.',
     price: 3975,
     image: product5,
+    category: 'kitchen-appliances',
   },
   {
     id: 6,
@@ -62,45 +67,52 @@ export const productData = [
     description: 'Quick chopping solution for vegetables.',
     price: 1600,
     image: product6,
+    category: 'kitchen-appliances',
   },
 ];
 
 export const servicesData = [
   {
-    id: 1,
+    id: 7,
     name: 'Multi-Maker Tawa Model',
     description: 'Can be used for dosa, roti, omelette and more.',
     image: service1,
+    category: 'kitchen-appliances',
   },
   {
-    id: 2,
+    id: 8,
     name: 'Juicer',
     description: 'Multi-purpose juicer for juice, milkshake, and blending.',
     image: service2,
+    category: 'kitchen-appliances',
   },
   {
-    id: 3,
+    id: 9,
     name: 'Vegetable Chopper',
     description: 'Used to chop vegetables in different sizes easily.',
     image: service3,
+    category: 'kitchen-appliances',
   },
   {
-    id: 4,
+    id: 10,
     name: 'Body Massager',
     description: 'Helps to relax muscles and provides full body massage.',
     image: service4,
+    category: 'health-wellness',
   },
   {
-    id: 5,
+    id: 11,
     name: 'Hand Blender',
     description: 'Useful for blending liquids and making smooth mixtures.',
     image: service5,
+    category: 'kitchen-appliances',
   },
   {
-    id: 6,
+    id: 12,
     name: '3 in 1 Hand Blender',
     description: 'Comes with whisk, chopper, and blender attachments.',
     image: service6,
+    category: 'kitchen-appliances',
   },
 ];
 
