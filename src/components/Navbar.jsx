@@ -57,7 +57,7 @@ const Navbar = () => {
             </div>
           </div>
 
-          <ul className="hidden items-center gap-1 xl:flex">
+          <ul className="hidden items-center gap-1 lg:flex">
             {navItems.map((item) => {
               const Icon = item.icon;
               return (
