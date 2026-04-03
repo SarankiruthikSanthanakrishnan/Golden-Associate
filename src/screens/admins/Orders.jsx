@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   ShoppingCart, 
   Search, 
@@ -9,18 +9,36 @@ import {
   Truck, 
   AlertCircle,
   Eye,
-  Download
+  Download,
+  Loader2
 } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
+import { db } from '../../firebase/firebase';
+import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 
 const Orders = () => {
-  const [orders, setOrders] = useState([
-    { id: 'GA-2026-001', customer: 'Saran K', total: 5975, items: 3, status: 'Processing', date: '2026-03-31' },
-    { id: 'GA-2026-002', customer: 'Kiruthik S', total: 2275, items: 1, status: 'Shipped', date: '2026-03-30' },
-    { id: 'GA-2026-003', customer: 'Prakash W', total: 12450, items: 5, status: 'Delivered', date: '2026-03-29' },
-    { id: 'GA-2026-004', customer: 'Anitha R', total: 3575, items: 1, status: 'Pending', date: '2026-03-31' },
-    { id: 'GA-2026-005', customer: 'Rajesh V', total: 8950, items: 2, status: 'Delivered', date: '2026-03-25' },
-  ]);
+  const [orders, setOrders] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const q = query(collection(db, 'orders'), orderBy('createdAt', 'desc'));
+        const querySnapshot = await getDocs(q);
+        const fetchedOrders = [];
+        querySnapshot.forEach((doc) => {
+          fetchedOrders.push({ id: doc.id, ...doc.data() });
+        });
+        setOrders(fetchedOrders);
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, []);
 
   const getStatusStyle = (status) => {
     switch (status) {
@@ -67,25 +85,41 @@ const Orders = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50">
-              {orders.map((order) => (
-                <tr key={order.id} className="hover:bg-slate-50/50 transition-colors group">
-                  <td className="px-6 py-4">
-                    <span className="text-xs font-black text-blue-600">#{order.id}</span>
+              {isLoading ? (
+                <tr>
+                  <td colSpan="6" className="px-6 py-12 text-center text-slate-400">
+                    <Loader2 className="animate-spin mx-auto mb-2" size={24} />
+                    <p className="text-xs font-bold uppercase tracking-widest">Loading Orders...</p>
                   </td>
-                  <td className="px-6 py-4">
-                    <p className="text-xs font-bold text-slate-900">{order.customer}</p>
-                    <p className="text-[9px] font-medium text-slate-400 mt-0.5 uppercase tracking-tighter">{order.items} Units</p>
+                </tr>
+              ) : orders.length === 0 ? (
+                <tr>
+                  <td colSpan="6" className="px-6 py-12 text-center text-slate-400">
+                    <p className="text-xs font-bold uppercase tracking-widest">No Active Orders Found</p>
                   </td>
-                  <td className="px-6 py-4">
-                    <p className="text-xs font-black text-slate-900">₹{order.total.toLocaleString()}</p>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-black uppercase ${getStatusStyle(order.status)}`}>
-                      {getStatusIcon(order.status)}
-                      {order.status}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 text-xs font-medium text-slate-500">{order.date}</td>
+                </tr>
+              ) : (
+                orders.map((order) => (
+                  <tr key={order.id} className="hover:bg-slate-50/50 transition-colors group">
+                    <td className="px-6 py-4">
+                      <span className="text-xs font-black text-blue-600">#{order.id.slice(0, 8).toUpperCase()}</span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <p className="text-xs font-bold text-slate-900">{order.customerInfo?.name || 'Unknown User'}</p>
+                      <p className="text-[9px] font-medium text-slate-400 mt-0.5 uppercase tracking-tighter">{order.totalItems || 0} Units</p>
+                    </td>
+                    <td className="px-6 py-4">
+                      <p className="text-xs font-black text-slate-900">₹{(order.totalAmount || 0).toLocaleString()}</p>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-black uppercase ${getStatusStyle(order.status)}`}>
+                        {getStatusIcon(order.status)}
+                        {order.status || 'Pending'}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-xs font-medium text-slate-500">
+                      {order.createdAt ? order.createdAt.toDate().toLocaleDateString() : 'N/A'}
+                    </td>
                   <td className="px-6 py-4">
                     <div className="flex justify-center">
                       <NavLink 
@@ -96,8 +130,9 @@ const Orders = () => {
                       </NavLink>
                     </div>
                   </td>
-                </tr>
-              ))}
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
