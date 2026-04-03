@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import {
   Wrench,
@@ -10,7 +11,7 @@ import {
   PhoneCall,
 } from 'lucide-react';
 import { servicesData } from '../../data/data';
-import { NavLink } from 'react-router-dom';
+import Link from 'next/link';
 
 const Service = () => {
   return (
@@ -96,12 +97,12 @@ const Service = () => {
               </p>
             </div>
           </div>
-          <NavLink
-            to="/reach-us"
+          <Link
+            href="/reach-us"
             className="ga-button-primary scale-110 shadow-lg shadow-blue-500/20 px-8 py-3.5 text-xs font-black uppercase tracking-[0.2em]"
           >
             Book Consultation
-          </NavLink>
+          </Link>
         </div>
       </section>
     </div>

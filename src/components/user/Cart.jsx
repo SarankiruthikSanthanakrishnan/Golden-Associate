@@ -1,5 +1,7 @@
+"use client";
 import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   Trash2,
   Minus,
@@ -32,7 +34,7 @@ const Cart = () => {
     address: '',
     pincode: '',
   });
-  const navigate = useNavigate();
+  const navigate = useRouter();
 
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
@@ -74,7 +76,7 @@ const Cart = () => {
 
       clearCart();
       setIsCheckoutOpen(false);
-      navigate('/');
+      navigate.push('/');
     } catch (error) {
       console.error('Error placing order:', error);
       alert('Failed to place order. Please try again.');
@@ -96,9 +98,9 @@ const Cart = () => {
           Looks like you haven't added any premium appliances to your collection
           yet.
         </p>
-        <NavLink to="/explore" className="ga-button-primary px-8">
+        <Link href="/explore" className="ga-button-primary px-8">
           Start Shopping
-        </NavLink>
+        </Link>
       </div>
     );
   }
@@ -123,18 +125,20 @@ const Cart = () => {
                 key={item.id}
                 className="ga-card bg-white p-4 flex gap-6 items-center border-none shadow-sm"
               >
-                <div className="w-24 h-24 bg-slate-50 rounded-lg p-2 shrink-0">
-                  <img
+                <div className="w-24 h-24 bg-slate-50 rounded-lg p-2 shrink-0 relative overflow-hidden">
+                  <Image
                     src={item.image}
                     alt={item.name}
-                    className="w-full h-full object-contain mix-blend-multiply"
+                    fill
+                    sizes="96px"
+                    className="object-contain mix-blend-multiply p-2"
                   />
                 </div>
 
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between items-start mb-1">
                     <h3 className="text-sm font-black text-slate-900 truncate hover:text-blue-600 transition-colors">
-                      <NavLink to={`/products/${item.id}`}>{item.name}</NavLink>
+                      <Link to={`/products/${item.id}`}>{item.name}</Link>
                     </h3>
                     <button
                       onClick={() => removeFromCart(item.id)}
@@ -177,12 +181,12 @@ const Cart = () => {
               </div>
             ))}
 
-            <NavLink
-              to="/explore"
+            <Link
+              href="/explore"
               className="inline-flex items-center gap-2 text-[10px] font-black text-blue-600 uppercase tracking-widest hover:underline mt-4"
             >
               <ShoppingBag size={14} /> Continue Shopping
-            </NavLink>
+            </Link>
           </div>
 
           {/* --- SUMMARY --- */}

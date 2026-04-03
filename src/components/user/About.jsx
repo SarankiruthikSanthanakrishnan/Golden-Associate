@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import {
   Target,
@@ -10,7 +11,7 @@ import {
   Award,
 } from 'lucide-react';
 import { workData } from '../../data/data';
-import { NavLink } from 'react-router-dom';
+import Link from 'next/link';
 
 const About = () => {
   return (
@@ -125,12 +126,12 @@ const About = () => {
                 Installation Gallery
               </h2>
             </div>
-            <NavLink
-              to="/explore"
+            <Link
+              href="/explore"
               className="text-xs font-bold text-slate-400 hover:text-white transition-colors border-b border-white/20 pb-1"
             >
               View Products
-            </NavLink>
+            </Link>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {workData.slice(0, 8).map((work) => (
@@ -170,9 +171,9 @@ const About = () => {
                 +91 99866 83173
               </span>
             </div>
-            <NavLink to="/reach-us" className="ga-button-primary scale-90">
+            <Link href="/reach-us" className="ga-button-primary scale-90">
               Get In Touch
-            </NavLink>
+            </Link>
           </div>
         </div>
       </section>

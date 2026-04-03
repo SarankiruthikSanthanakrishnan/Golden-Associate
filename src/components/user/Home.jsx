@@ -1,15 +1,17 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import Link from 'next/link';
 import { 
   ArrowRight, 
-  Star, 
-  Truck, 
   ShieldCheck, 
+  Truck, 
   RotateCcw, 
   CreditCard,
   PlayCircle,
-  ChevronRight
+  TrendingUp,
+  Star,
+  CheckCircle2
 } from 'lucide-react';
+import Image from 'next/image';
 import { productData, galleryVideoData } from '../../data/data';
 
 const Home = () => {
@@ -17,158 +19,182 @@ const Home = () => {
   const latestVideos = galleryVideoData.slice(0, 3);
 
   return (
-    <div className="bg-white">
-      {/* --- CONDENSED HERO --- */}
-      <section className="relative overflow-hidden pt-12 pb-16 lg:pt-16 lg:pb-20 border-b border-slate-100">
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-slate-50 -z-10 rounded-l-[50px] hidden lg:block"></div>
-        <div className="ga-container grid lg:grid-cols-2 gap-10 items-center">
-          <div className="animate-fade-in">
-            <span className="ga-chip mb-4 inline-flex items-center gap-2 px-3 py-1 text-blue-600 bg-blue-50">
-              <Star size={12} fill="currentColor" />
-              #1 Bangalore Appliance Dealer
-            </span>
-            <h1 className="text-3xl lg:text-5xl font-black leading-tight mb-4 text-slate-900 tracking-tight">
-              Smarter Living <br />
-              <span className="ga-text-gradient">Professional Care</span>
+    <div className="bg-slate-50 min-h-screen pb-20">
+      {/* --- ODOO STYLE HERO --- */}
+      <section className="bg-white border-b border-slate-200 pt-16 pb-20 overflow-hidden relative">
+        {/* Subtle grid background pattern typical for enterprise software */}
+        <div className="absolute inset-0 z-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
+        
+        <div className="ga-container relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+          <div className="animate-fade-in max-w-xl">
+            <div className="flex items-center gap-2 mb-6">
+              <span className="bg-blue-50 text-blue-600 px-2.5 py-1 rounded-sm text-[10px] font-black uppercase tracking-widest border border-blue-100 flex items-center gap-1.5">
+                <Star size={12} className="fill-blue-600" /> Premium Quality
+              </span>
+              <span className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Since 2010</span>
+            </div>
+            
+            <h1 className="text-4xl lg:text-6xl font-black text-slate-900 leading-[1.1] tracking-tight mb-6">
+              Intelligent Appliances <br />
+              <span className="text-blue-600">For Modern Homes.</span>
             </h1>
-            <p className="text-sm text-slate-500 mb-8 max-w-lg font-medium leading-relaxed">
-              Premium kitchen and utility appliances designed for efficiency. Serving Bangalore with trust since 2010.
+            
+            <p className="text-slate-500 text-sm font-medium leading-relaxed mb-8 max-w-md">
+              Upgrade your living space with industry-leading utility appliances. Precision engineered for efficiency, durability, and seamless integration into your daily life.
             </p>
-            <div className="flex flex-wrap gap-3">
-              <NavLink to="/explore" className="ga-button-primary flex items-center gap-2 group px-6 py-3">
-                Shop Collection
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-              </NavLink>
-              <NavLink to="/services" className="ga-button-secondary px-6 py-3">
-                Smart Kitchen
-              </NavLink>
+            
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link href="/explore" className="bg-blue-600 text-white hover:bg-blue-700 transition-colors px-6 py-3.5 rounded-lg font-black text-xs uppercase tracking-widest flex items-center justify-center gap-2 shadow-sm">
+                Explore Catalog <ArrowRight size={16} />
+              </Link>
+              <Link href="/reach-us" className="bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 transition-colors px-6 py-3.5 rounded-lg font-black text-xs uppercase tracking-widest flex items-center justify-center text-center shadow-sm">
+                Contact Sales
+              </Link>
+            </div>
+            
+            <div className="mt-8 flex items-center gap-4 text-xs font-bold text-slate-500">
+              <div className="flex items-center gap-1.5"><CheckCircle2 size={16} className="text-emerald-500" /> Certified</div>
+              <div className="flex items-center gap-1.5"><CheckCircle2 size={16} className="text-emerald-500" /> Waranteed</div>
+              <div className="flex items-center gap-1.5"><CheckCircle2 size={16} className="text-emerald-500" /> Support</div>
             </div>
           </div>
 
-          <div className="relative animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          <div className="relative animate-fade-in hidden lg:flex justify-center" style={{ animationDelay: '0.2s' }}>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-blue-100 rounded-full blur-3xl opacity-50"></div>
             <img
               src="https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&q=80&w=800"
               alt="Premium Kitchen"
-              className="rounded-2xl shadow-lg border border-slate-200 w-full object-cover aspect-video lg:aspect-auto"
+              className="relative z-10 w-full max-w-md rounded-2xl shadow-2xl border border-slate-100 object-cover aspect-[4/3] transform -rotate-2 hover:rotate-0 transition-transform duration-500"
             />
-            {/* Condensed badge */}
-            <div className="absolute -bottom-4 -left-4 bg-white px-4 py-3 rounded-xl shadow-lg border border-slate-100 hidden sm:block">
-              <p className="text-2xl font-black ga-text-gradient leading-none">25% OFF</p>
-              <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1 text-center">FIRST ORDER</p>
+            {/* Enterprise floating metric card */}
+            <div className="absolute bottom-10 -left-6 bg-white p-4 rounded-xl shadow-xl border border-slate-100 z-20 flex items-center gap-4">
+              <div className="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center text-emerald-600">
+                <TrendingUp size={20} />
+              </div>
+              <div>
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-0.5">Satisfaction</p>
+                <p className="text-xl font-black text-slate-900 leading-none">99.8%</p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* --- TRUST STRIP --- */}
-      <section className="bg-slate-900 py-6">
-        <div className="ga-container grid grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* --- ZOHO STYLE VALUE PROPS CARDS --- */}
+      <section className="ga-container -mt-10 relative z-20 mb-16">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { icon: Truck, label: 'Free Shipping', sub: 'Orders over ₹4999' },
-            { icon: ShieldCheck, label: 'Secure Payment', sub: '100% Protected' },
-            { icon: RotateCcw, label: '30-Day Return', sub: 'Hassle-Free Policy' },
-            { icon: CreditCard, label: 'EMI Options', sub: 'Zero Interest Plans' },
+            { icon: Truck, title: 'Nationwide Delivery', desc: 'Free shipping on orders spanning over ₹4999 anywhere in India.' },
+            { icon: ShieldCheck, title: 'Secure Checkout', desc: 'Enterprise-grade encryption ensures your data is 100% protected.' },
+            { icon: RotateCcw, title: 'Easy Returns', desc: '30-day hassle-free return policy if you are not entirely satisfied.' },
+            { icon: CreditCard, title: 'Flexible EMI', desc: 'Partnered with major banks to provide zero-interest EMI plans.' },
           ].map((item, i) => (
-            <div key={i} className="flex items-center gap-3 group">
-              <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-blue-400">
-                <item.icon size={16} />
+            <div key={i} className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-300 hover:shadow-md transition-all group">
+              <div className="w-10 h-10 bg-slate-50 border border-slate-100 rounded-lg flex items-center justify-center text-blue-600 mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                <item.icon size={20} />
               </div>
-              <div>
-                <p className="text-white font-bold text-[11px] leading-tight">{item.label}</p>
-                <p className="text-slate-500 text-[9px] font-bold uppercase tracking-widest">{item.sub}</p>
-              </div>
+              <h3 className="text-sm font-black text-slate-900 mb-2">{item.title}</h3>
+              <p className="text-[11px] font-medium text-slate-500 leading-relaxed">{item.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* --- FEATURED COLLECTIONS --- */}
-      <section className="py-16 ga-container">
-        <div className="flex justify-between items-end mb-10">
+      {/* --- ENTERPRISE PRODUCT SHOWCASE --- */}
+      <section className="ga-container mb-20">
+        <div className="flex flex-col md:flex-row justify-between md:items-end mb-8 gap-4">
           <div>
-            <h2 className="text-2xl font-black text-slate-900 mb-2">Featured <span className="ga-text-gradient">Collections</span></h2>
-            <p className="text-xs text-slate-500 font-medium">Handpicked favorites for your modern home</p>
+            <span className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-2 block">Top Rated</span>
+            <h2 className="text-2xl font-black text-slate-900 tracking-tight">Enterprise Selections</h2>
           </div>
-          <NavLink to="/explore" className="text-[10px] font-black text-blue-600 hover:gap-1 transition-all uppercase tracking-widest flex items-center gap-1">
-            Browse All <ChevronRight size={14} />
-          </NavLink>
+          <Link href="/explore" className="text-xs font-bold text-slate-500 hover:text-blue-600 flex items-center gap-1 transition-colors uppercase tracking-widest">
+            View Inventory <ArrowRight size={14} />
+          </Link>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {featuredProducts.map((product) => (
-            <NavLink key={product.id} to={`/products/${product.id}`} className="ga-card group overflow-hidden">
-              <div className="h-56 bg-slate-50 relative border-b border-slate-100 p-4">
-                <img 
+            <Link key={product.id} href={`/products/${product.id}`} className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:border-blue-400 hover:shadow-lg transition-all group flex flex-col">
+              <div className="h-48 bg-slate-50 p-6 relative flex items-center justify-center">
+                <Image 
                   src={product.image} 
                   alt={product.name} 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                  fill
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                  className="object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500 p-6" 
                 />
-                <div className="absolute top-2 left-2">
-                  <span className="bg-white/90 px-2 py-0.5 rounded text-[10px] font-bold shadow-sm">{product.category}</span>
+                <div className="absolute top-3 left-3 z-10">
+                  <span className="bg-white/90 border border-slate-200 text-slate-700 px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest shadow-sm">{product.category}</span>
                 </div>
               </div>
-              <div className="p-4">
-                <h3 className="text-xs font-bold text-slate-900 group-hover:text-blue-600 transition-colors mb-2 truncate">
+              <div className="p-4 border-t border-slate-100 flex flex-col flex-1">
+                <h3 className="text-xs font-bold text-slate-900 line-clamp-2 mb-3 group-hover:text-blue-600 transition-colors">
                   {product.name}
                 </h3>
-                <div className="flex justify-between items-center">
+                <div className="mt-auto flex justify-between items-center">
                   <span className="text-sm font-black text-slate-900">₹{product.price.toLocaleString()}</span>
-                  <div className="w-7 h-7 rounded-md bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                  <div className="w-8 h-8 rounded border border-slate-200 bg-white flex items-center justify-center text-slate-400 group-hover:bg-blue-600 group-hover:border-blue-600 group-hover:text-white transition-all">
                     <ArrowRight size={14} />
                   </div>
                 </div>
               </div>
-            </NavLink>
+            </Link>
           ))}
         </div>
       </section>
 
-      {/* --- VIDEO EXPERIENCE --- */}
-      <section className="bg-slate-50 py-16 border-y border-slate-100">
-        <div className="ga-container mb-10 text-center">
-          <h2 className="text-2xl font-black text-slate-900 mb-2">Watch in <span className="ga-text-gradient">Action</span></h2>
-          <p className="text-xs text-slate-500 font-medium">See how our appliances transform everyday tasks</p>
-        </div>
+      {/* --- KNOWLEDGE BASE / MEDIA --- */}
+      <section className="bg-white border-y border-slate-200 py-20">
+        <div className="ga-container">
+          <div className="max-w-2xl mx-auto text-center mb-12">
+            <span className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-2 block">Resources</span>
+            <h2 className="text-2xl font-black text-slate-900 tracking-tight mb-4">Product Visualizations</h2>
+            <p className="text-xs font-medium text-slate-500">Discover inside-views and operational guides for our premium appliances through our curated media library.</p>
+          </div>
 
-        <div className="ga-container grid md:grid-cols-3 gap-6">
-          {latestVideos.map((video) => (
-            <div key={video.id} className="group relative rounded-xl overflow-hidden ga-card border-slate-200">
-              <div className="aspect-video relative overflow-hidden bg-slate-200">
-                <div className="absolute inset-0 bg-slate-900/30 flex items-center justify-center group-hover:bg-slate-900/10 transition-all z-10">
-                  <PlayCircle size={40} className="text-white opacity-80 group-hover:scale-110 group-hover:opacity-100 transition-all" strokeWidth={1.5} />
+          <div className="grid md:grid-cols-3 gap-6">
+            {latestVideos.map((video) => (
+              <div key={video.id} className="bg-slate-50 rounded-xl border border-slate-200 overflow-hidden group cursor-pointer hover:border-slate-300 transition-all">
+                <div className="aspect-video relative overflow-hidden">
+                  <div className="absolute inset-0 bg-slate-900/20 flex items-center justify-center group-hover:bg-slate-900/40 transition-all z-10">
+                    <PlayCircle size={48} className="text-white opacity-90 group-hover:scale-110 transition-transform" strokeWidth={1} />
+                  </div>
+                  <img 
+                    src={`https://img.youtube.com/vi/${video.videoUrl.split('v=')[1]?.split('&')[0] || video.videoUrl.split('/').pop().split('?')[0]}/maxresdefault.jpg`}
+                    alt={video.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
                 </div>
-                <img 
-                  src={`https://img.youtube.com/vi/${video.videoUrl.split('v=')[1]?.split('&')[0] || video.videoUrl.split('/').pop().split('?')[0]}/maxresdefault.jpg`}
-                  alt={video.title}
-                  className="w-full h-full object-cover"
-                />
+                <div className="p-5">
+                  <h4 className="text-sm font-black text-slate-900 mb-2 line-clamp-1">{video.title}</h4>
+                  <p className="text-[11px] font-medium text-slate-500 leading-relaxed line-clamp-2">{video.description}</p>
+                </div>
               </div>
-              <div className="p-4 bg-white">
-                <h4 className="text-sm font-black text-slate-900 mb-1 truncate">{video.title}</h4>
-                <p className="text-[10px] text-slate-500 font-medium leading-relaxed line-clamp-2">{video.description}</p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* --- CONDENSED CTA --- */}
-      <section className="py-16 ga-container">
-        <div className="relative overflow-hidden rounded-2xl bg-linear-to-r from-blue-700 to-blue-500 p-10 lg:p-14 text-white text-center shadow-lg">
-          <div className="relative z-10">
-            <h2 className="text-2xl lg:text-3xl font-black mb-4">
-              Upgrade Your Home <br className="md:hidden" /> Environment Today
-            </h2>
-            <p className="text-blue-100 mb-8 text-sm max-w-xl mx-auto font-medium">
-              Join thousands of Bangalore families who trust Golden Associate for quality kitchen solutions.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-3">
-              <NavLink to="/explore" className="bg-white text-blue-700 px-8 py-3 rounded-lg font-black text-sm hover:bg-slate-50 transition-all">
-                Browse Full Catalog
-              </NavLink>
-              <NavLink to="/reach-us" className="bg-blue-600 text-white border border-white/20 px-8 py-3 rounded-lg font-black text-sm hover:bg-blue-500 transition-all">
-                Contact Agent
-              </NavLink>
+      {/* --- ODOO STYLE CLEAN CTA --- */}
+      <section className="ga-container mt-20">
+        <div className="bg-slate-900 rounded-2xl overflow-hidden relative shadow-2xl">
+          <div className="absolute top-0 right-0 w-1/2 h-full bg-blue-600/10 blur-[100px] pointer-events-none"></div>
+          <div className="p-12 lg:p-16 flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+            <div className="max-w-xl text-center md:text-left">
+              <h2 className="text-2xl lg:text-3xl font-black text-white mb-4 tracking-tight">
+                Ready to optimize your infrastructure?
+              </h2>
+              <p className="text-slate-400 text-sm font-medium">
+                Our support engineers are ready to help you select the perfect appliances for your residential or commercial needs.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+              <Link href="/explore" className="bg-blue-600 text-white hover:bg-blue-500 transition-colors px-8 py-4 rounded-xl font-black text-xs uppercase tracking-widest text-center shadow-lg shadow-blue-900/20">
+                Browse Directory
+              </Link>
+              <Link href="/reach-us" className="bg-slate-800 text-white hover:bg-slate-700 border border-slate-700 transition-colors px-8 py-4 rounded-xl font-black text-xs uppercase tracking-widest text-center">
+                Contact Experts
+              </Link>
             </div>
           </div>
         </div>

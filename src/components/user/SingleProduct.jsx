@@ -1,5 +1,8 @@
+"use client";
 import React, { useState } from 'react';
-import { useParams, NavLink } from 'react-router-dom';
+import { useParams } from 'next/navigation';
+import Link from 'next/link';
+import Image from 'next/image';
 import { 
   Star, 
   ShoppingCart, 
@@ -28,7 +31,7 @@ const SingleProduct = () => {
       <div className="min-h-screen flex items-center justify-center p-8 bg-slate-50">
         <div className="text-center bg-white p-12 rounded-3xl ga-card border-none">
           <h2 className="text-2xl font-black text-slate-900 mb-6 tracking-tight">Product Not Found</h2>
-          <NavLink to="/explore" className="ga-button-primary">Return to Catalog</NavLink>
+          <Link href="/explore" className="ga-button-primary">Return to Catalog</Link>
         </div>
       </div>
     );
@@ -39,9 +42,9 @@ const SingleProduct = () => {
       {/* --- CONDENSED BREADCRUMBS --- */}
       <div className="py-4 ga-container sticky top-16 bg-slate-50/80 backdrop-blur-sm z-30">
         <nav className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
-          <NavLink to="/" className="hover:text-blue-600">Home</NavLink>
+          <Link href="/" className="hover:text-blue-600">Home</Link>
           <ChevronRight size={10} />
-          <NavLink to="/explore" className="hover:text-blue-600">Explore</NavLink>
+          <Link href="/explore" className="hover:text-blue-600">Explore</Link>
           <ChevronRight size={10} />
           <span className="text-slate-900 truncate max-w-[150px]">{product.name}</span>
         </nav>
@@ -52,7 +55,7 @@ const SingleProduct = () => {
           {/* --- IMAGE VIEW --- */}
           <div className="ga-card bg-white p-5 sticky top-28">
             <div className="aspect-square relative flex items-center justify-center bg-slate-50 rounded-lg overflow-hidden group">
-              <img src={product.image} alt={product.name} className="w-full h-full object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-700" />
+              <Image src={product.image} alt={product.name} fill sizes="50vw" className="object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-700 p-8" />
               <div className="absolute top-3 right-3 flex flex-col gap-2">
                 <button className="w-7 h-7 rounded-lg bg-white border border-slate-100 flex items-center justify-center text-slate-400 hover:text-blue-600 shadow-sm transition-all"><Share2 size={14} /></button>
                 <button className="w-7 h-7 rounded-lg bg-white border border-slate-100 flex items-center justify-center text-slate-400 hover:text-rose-500 shadow-sm transition-all"><Heart size={14} /></button>
@@ -61,8 +64,8 @@ const SingleProduct = () => {
             {/* Thumbs */}
             <div className="flex gap-2 mt-4">
               {[1,2,3,4].map(i => (
-                <div key={i} className={`w-14 h-14 rounded-lg border-2 ${i === 1 ? 'border-blue-600' : 'border-slate-100'} overflow-hidden cursor-pointer bg-slate-50 p-1.5`}>
-                  <img src={product.image} alt="thumb" className="w-full h-full object-contain mix-blend-multiply" />
+                <div key={i} className={`w-14 h-14 rounded-lg border-2 ${i === 1 ? 'border-blue-600' : 'border-slate-100'} overflow-hidden cursor-pointer bg-slate-50 relative p-1.5`}>
+                  <Image src={product.image} alt="thumb" fill sizes="56px" className="object-contain mix-blend-multiply p-1" />
                 </div>
               ))}
             </div>

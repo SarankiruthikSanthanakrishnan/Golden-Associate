@@ -1,5 +1,7 @@
+"use client";
 import React from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { 
   LayoutDashboard, 
   Package, 
@@ -16,7 +18,7 @@ import logo from '../../assets/image.png';
 import { useAuth } from '../../context/AuthContext';
 
 const AdminSidebar = () => {
-  const location = useLocation();
+  const location = usePathname();
   const { logout } = useAuth();
 
   const menuItems = [
@@ -43,9 +45,9 @@ const AdminSidebar = () => {
 
         <nav className="space-y-1">
           {menuItems.map((item) => (
-            <NavLink
+            <Link
               key={item.label}
-              to={item.to}
+              href={item.to}
               className={({ isActive }) =>
                 `flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all ${
                   isActive
@@ -59,7 +61,7 @@ const AdminSidebar = () => {
                 {item.label}
               </div>
               <ChevronRight size={12} className="opacity-40" />
-            </NavLink>
+            </Link>
           ))}
         </nav>
       </div>

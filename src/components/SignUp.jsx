@@ -1,5 +1,7 @@
+"use client";
 import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Mail, Lock, User, UserPlus, ArrowRight, ShieldCheck } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
@@ -12,7 +14,7 @@ const SignUp = () => {
     password: '',
     agree: false
   });
-  const navigate = useNavigate();
+  const navigate = useRouter();
 
   const handleSignUp = (e) => {
     e.preventDefault();
@@ -26,9 +28,9 @@ const SignUp = () => {
     <div className="bg-slate-50 min-h-screen flex items-center justify-center py-12 px-4">
       <div className="max-w-md w-full animate-fade-in">
         <div className="text-center mb-8">
-          <NavLink to="/" className="text-2xl font-black text-slate-900 mb-4 inline-block">
+          <Link href="/" className="text-2xl font-black text-slate-900 mb-4 inline-block">
             Golden Associate<span className="text-blue-500">.</span>
-          </NavLink>
+          </Link>
           <h1 className="text-xl font-bold text-slate-900 uppercase tracking-widest">Create Account</h1>
           <p className="text-xs text-slate-500 font-medium mt-1">Start your journey with us today.</p>
         </div>
@@ -90,7 +92,7 @@ const SignUp = () => {
                 onChange={(e) => setFormData({...formData, agree: e.target.checked})}
               />
               <label htmlFor="agree" className="text-[10px] font-bold text-slate-500 leading-normal">
-                I agree to the <NavLink to="/terms" className="text-blue-600 hover:underline">Terms of Service</NavLink> and <NavLink to="/privacy" className="text-blue-600 hover:underline">Privacy Policy</NavLink>.
+                I agree to the <Link href="/terms" className="text-blue-600 hover:underline">Terms of Service</Link> and <Link href="/privacy" className="text-blue-600 hover:underline">Privacy Policy</Link>.
               </label>
             </div>
 
@@ -101,7 +103,7 @@ const SignUp = () => {
         </div>
 
         <p className="text-center mt-8 text-xs font-medium text-slate-500">
-          Already have an account? <NavLink to="/login" className="text-blue-600 font-bold hover:underline">Sign in instead</NavLink>
+          Already have an account? <Link href="/login" className="text-blue-600 font-bold hover:underline">Sign in instead</Link>
         </p>
       </div>
     </div>

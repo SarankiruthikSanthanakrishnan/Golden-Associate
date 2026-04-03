@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from 'react';
 import { 
   Zap, 
@@ -7,7 +8,8 @@ import {
   Tags,
   BadgePercent
 } from 'lucide-react';
-import { NavLink } from 'react-router-dom';
+import Link from 'next/link';
+import Image from 'next/image';
 import { productData } from '../../data/data';
 import { useCart } from '../../context/CartContext';
 import { toast } from 'react-toastify';
@@ -89,23 +91,30 @@ const Deals = () => {
             const originalPrice = Math.floor(product.price / (1 - discount/100));
             
             return (
-              <NavLink key={product.id} to={`/products/${product.id}`} className="ga-card group overflow-hidden border-slate-200">
-                <NavLink to={`/products/${product.id}`} className="block h-56 bg-slate-50 relative p-3 group-hover:bg-slate-100 transition-colors">
-                  <img src={product.image} alt={product.name} className="w-full h-full object-contain mix-blend-multiply transition-transform group-hover:scale-105" />
-                  <div className="absolute top-2 left-2">
+              <div key={product.id} className="ga-card group overflow-hidden border-slate-200 flex flex-col">
+                <Link href={`/products/${product.id}`} className="block h-56 bg-slate-50 relative p-3 group-hover:bg-slate-100 transition-colors cursor-pointer">
+                  <Image 
+                    src={product.image} 
+                    alt={product.name} 
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500 p-3" 
+                  />
+                  <div className="absolute top-2 left-2 z-10">
                     <span className="bg-rose-500 text-white px-1.5 py-0.5 rounded-[4px] text-[8px] font-black shadow-lg uppercase tracking-tighter">-{discount}% Off</span>
                   </div>
-                </NavLink>
-                <div className="p-3">
-                  <NavLink to={`/products/${product.id}`}>
+                </Link>
+                <div className="p-3 flex flex-col flex-1">
+                  <Link href={`/products/${product.id}`} className="cursor-pointer">
                     <h3 className="text-[13px] font-black text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-1 mb-1 leading-tight">{product.name}</h3>
-                  </NavLink>
-                  <div className="flex items-center gap-2 mb-3">
+                  </Link>
+                  <div className="flex items-center gap-2 mb-3 mt-auto">
                     <span className="text-sm font-black text-slate-900">₹{product.price.toLocaleString()}</span>
                     <span className="text-[10px] font-medium text-slate-400 line-through">₹{originalPrice.toLocaleString()}</span>
                   </div>
                   <button 
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.preventDefault();
                       addToCart(product);
                       toast.success(`${product.name} added to cart!`);
                     }}
@@ -114,7 +123,7 @@ const Deals = () => {
                     Claim Deal <ArrowRight size={12} />
                   </button>
                 </div>
-              </NavLink>
+              </div>
             );
           })}
         </div>

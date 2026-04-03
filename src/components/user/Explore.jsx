@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useMemo } from 'react';
 import {
   Search,
@@ -5,11 +6,9 @@ import {
   ChevronDown,
   X,
   ShoppingCart,
-  Eye,
-  LayoutGrid,
-  List,
 } from 'lucide-react';
-import { NavLink } from 'react-router-dom';
+import Link from 'next/link';
+import Image from 'next/image';
 import { productData } from '../../data/data';
 import { useCart } from '../../context/CartContext';
 import { toast } from 'react-toastify';
@@ -153,12 +152,12 @@ const Explore = () => {
               Not sure what to buy? Our experts are available for Bangalore
               consultations.
             </p>
-            <NavLink
-              to="/reach-us"
+            <Link
+              href="/reach-us"
               className="inline-block bg-white text-blue-600 px-3 py-1.5 rounded text-[10px] font-black uppercase tracking-widest hover:bg-slate-50 transition-all"
             >
               Contact Us
-            </NavLink>
+            </Link>
           </div>
         </aside>
 
@@ -167,30 +166,29 @@ const Explore = () => {
           {filteredProducts.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredProducts.map((product) => (
-                <div
+                <Link
                   key={product.id}
-                  className="ga-card group flex flex-col bg-white overflow-hidden hover:shadow-md transition-shadow"
+                  href={`/products/${product.id}`}
+                  className="ga-card group flex flex-col bg-white overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
                 >
                   <div className="h-56 bg-slate-50 relative border-b border-slate-100 p-3">
-                    <img
+                    <Image
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500 p-3"
                     />
-                    <div className="absolute top-2 left-2">
+                    <div className="absolute top-2 left-2 z-10">
                       <span className="bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded-[4px] text-[8px] font-black text-slate-500 border border-slate-100 uppercase tracking-tighter">
                         {product.category}
                       </span>
                     </div>
-
-                    {/* Quick actions on hover */}
-                    <div className="absolute inset-0 bg-slate-900/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <NavLink
-                        to={`/products/${product.id}`}
-                        className="bg-white text-slate-900 p-2 rounded-full shadow-lg transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 hover:text-blue-600"
-                      >
-                        <Eye size={16} />
-                      </NavLink>
+                    {/* View Detail Hint on hover */}
+                    <div className="absolute inset-0 bg-blue-600/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-3 z-20">
+                      <span className="bg-white/90 backdrop-blur-sm text-blue-600 text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-sm border border-blue-100 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                        View Details →
+                      </span>
                     </div>
                   </div>
 
@@ -213,7 +211,9 @@ const Explore = () => {
                         </p>
                       </div>
                       <button
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
                           addToCart(product);
                           toast.success(`${product.name} added to cart!`);
                         }}
@@ -223,7 +223,7 @@ const Explore = () => {
                       </button>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           ) : (

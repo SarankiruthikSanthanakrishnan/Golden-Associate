@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from 'react';
 import { 
   ShoppingCart, 
@@ -12,7 +13,7 @@ import {
   Download,
   Loader2
 } from 'lucide-react';
-import { NavLink } from 'react-router-dom';
+import Link from 'next/link';
 import { db } from '../../firebase/firebase';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 
@@ -122,12 +123,12 @@ const Orders = () => {
                     </td>
                   <td className="px-6 py-4">
                     <div className="flex justify-center">
-                      <NavLink 
-                        to={`/admin/orders/${order.id}`}
+                      <Link 
+                        href={`/admin/orders/${order.id}`}
                         className="p-2 text-slate-400 hover:text-blue-600 transition-colors bg-slate-50 rounded-lg group-hover:bg-blue-50"
                       >
                         <Eye size={16} />
-                      </NavLink>
+                      </Link>
                     </div>
                   </td>
                   </tr>

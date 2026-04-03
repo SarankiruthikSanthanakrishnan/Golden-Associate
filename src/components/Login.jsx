@@ -1,5 +1,7 @@
+"use client";
 import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Mail, Lock, LogIn } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
@@ -8,7 +10,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useAuth();
-  const navigate = useNavigate();
+  const navigate = useRouter();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -25,12 +27,12 @@ const Login = () => {
     <div className="bg-slate-50 min-h-screen flex items-center justify-center py-12 px-4">
       <div className="max-w-md w-full animate-fade-in">
         <div className="text-center mb-8">
-          <NavLink
-            to="/"
+          <Link
+            href="/"
             className="text-2xl font-black text-slate-900 mb-4 inline-block"
           >
             Golden Associate<span className="text-blue-500">.</span>
-          </NavLink>
+          </Link>
           <h1 className="text-xl font-bold text-slate-900 uppercase tracking-widest">
             Welcome Back
           </h1>
@@ -115,12 +117,12 @@ const Login = () => {
 
         <p className="text-center mt-8 text-xs font-medium text-slate-500">
           Don't have an account?{' '}
-          <NavLink
-            to="/signup"
+          <Link
+            href="/signup"
             className="text-blue-600 font-bold hover:underline"
           >
             Sign up for free
-          </NavLink>
+          </Link>
         </p>
       </div>
     </div>

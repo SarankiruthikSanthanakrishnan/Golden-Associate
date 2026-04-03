@@ -1,5 +1,7 @@
+"use client";
+
 import { createContext, useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 const AuthContext = createContext();
 const AUTH_STORAGE_KEY = 'goldenassociate_user';
@@ -14,7 +16,7 @@ export const AuthProvider = ({ children }) => {
     }
   });
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
     if (user) {
@@ -30,7 +32,7 @@ export const AuthProvider = ({ children }) => {
     if (username) {
       setUser({ username, role: 'admin' });
       setError(null);
-      navigate('/home');
+      router.push('/home');
       return { success: true };
     } else {
       setError('Please enter a valid email');
@@ -42,7 +44,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     localStorage.removeItem(AUTH_STORAGE_KEY);
     setError(null);
-    navigate('/');
+    router.push('/');
   };
 
   return (

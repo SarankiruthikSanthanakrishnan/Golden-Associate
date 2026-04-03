@@ -1,5 +1,7 @@
+"use client";
 import React, { useState } from 'react';
-import { useParams, NavLink } from 'react-router-dom';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { 
   ArrowLeft, 
   Printer, 
@@ -16,6 +18,7 @@ import {
   CreditCard,
   FileText
 } from 'lucide-react';
+import Image from 'next/image';
 import { productData } from '../../data/data';
 
 const OrderDetail = () => {
@@ -29,9 +32,9 @@ const OrderDetail = () => {
     <div className="animate-fade-in">
       <div className="mb-8 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <NavLink to="/admin/orders" className="p-2 bg-white border border-slate-200 rounded-xl text-slate-500 hover:text-blue-600 shadow-sm transition-all">
+          <Link href="/admin/orders" className="p-2 bg-white border border-slate-200 rounded-xl text-slate-500 hover:text-blue-600 shadow-sm transition-all">
             <ArrowLeft size={18} />
-          </NavLink>
+          </Link>
           <div>
             <h1 className="text-xl font-black text-slate-900 tracking-tight uppercase">Order Detail</h1>
             <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">Reference: #{id}</p>
@@ -41,9 +44,9 @@ const OrderDetail = () => {
           <button className="ga-button-secondary border-slate-200 gap-2 px-4 py-2.5 text-xs font-bold bg-white text-slate-600 uppercase tracking-widest">
             <Printer size={16} /> Print
           </button>
-          <NavLink to={`/admin/invoice/${id}`} className="ga-button-primary bg-slate-900 gap-2 px-6 py-2.5 text-xs font-black uppercase tracking-widest shadow-xl shadow-slate-900/10 flex items-center">
+          <Link href={`/admin/invoice/${id}`} className="ga-button-primary bg-slate-900 gap-2 px-6 py-2.5 text-xs font-black uppercase tracking-widest shadow-xl shadow-slate-900/10 flex items-center">
             <FileText size={16} /> Generate Invoice
-          </NavLink>
+          </Link>
         </div>
       </div>
 
@@ -91,8 +94,8 @@ const OrderDetail = () => {
                   <tr key={item.id} className="hover:bg-slate-50/30 transition-colors">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-slate-50 rounded-lg p-1 border border-slate-100">
-                          <img src={item.image} alt={item.name} className="w-full h-full object-contain mix-blend-multiply" />
+                        <div className="w-10 h-10 bg-slate-50 rounded-lg p-1 border border-slate-100 relative overflow-hidden">
+                          <Image src={item.image} alt={item.name} fill sizes="40px" className="object-contain mix-blend-multiply p-1" />
                         </div>
                         <p className="text-xs font-black text-slate-900">{item.name}</p>
                       </div>

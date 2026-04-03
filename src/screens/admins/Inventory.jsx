@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from 'react';
 import { 
   Package, 
@@ -12,6 +13,7 @@ import {
   ChevronRight,
   Download
 } from 'lucide-react';
+import Image from 'next/image';
 import { productData } from '../../data/data';
 
 const Inventory = () => {
@@ -67,8 +69,8 @@ const Inventory = () => {
                 <tr key={product.id} className="hover:bg-slate-50/50 transition-colors group">
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 bg-slate-50 rounded-lg p-1 shrink-0 border border-slate-100">
-                        <img src={product.image} alt={product.name} className="w-full h-full object-contain mix-blend-multiply" />
+                      <div className="w-10 h-10 bg-slate-50 rounded-lg p-1 shrink-0 border border-slate-100 relative overflow-hidden">
+                        <Image src={product.image} alt={product.name} fill sizes="40px" className="object-contain mix-blend-multiply p-1" />
                       </div>
                       <div>
                         <p className="text-xs font-black text-slate-900 leading-tight">{product.name}</p>
